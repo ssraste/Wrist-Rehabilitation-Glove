@@ -8,10 +8,9 @@ const float STEPS_PER_REV = 32;     // Amount of gear reduction
 const float GEAR_RED = 64;          // Gear reduction ratio
 const float STEPS_PER_OUT_REV = STEPS_PER_REV * GEAR_RED; // Steps per geared output rotation
 
-// Defines the number of steps per revolution
+// no. of steps per revolution
 const int stepsPerRevolution = STEPS_PER_OUT_REV;
 
-// Creates instances of stepper class
 // Pins entered in sequence IN1–IN3–IN2–IN4 for Stepper
 Stepper myStepper1(stepsPerRevolution, 8, 10, 9, 11);
 Stepper myStepper2(stepsPerRevolution, 4, 6, 5, 7);
@@ -22,13 +21,11 @@ void setup() {
   Serial.begin(115200); 
   Wire.begin();
 
-  // Start the serial communication with MPU6050
   byte status = mpu.begin();
   Serial.print(F("MPU6050 status: "));
   Serial.println(status);
 
   while (status != 0) {
-    // Stop everything if could not connect to MPU6050
   }
 
   Serial.println(F("Calculating offsets, do not move MPU6050"));
@@ -69,11 +66,10 @@ void loop() {
   int yaw = map(int(mpu.getAngleZ()), -24, 50, 800, 0);
   int pitch = map(int(mpu.getAngleY()), -45, 60, 600, 0);
 
-  // Send yaw and pitch to the serial port
   Serial.print("Yaw: ");
   Serial.print(yaw);
   Serial.print(", Pitch: ");
   Serial.println(pitch);
 
-  delay(100); // Delay to control data rate
+  delay(100); 
 }
